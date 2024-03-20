@@ -19,7 +19,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           
       - name: Create hello.txt file
-        run: echo "Hello, world!" > hello.txt
+        run: ssh -o StrictHostKeyChecking=no azureuser@4.233.208.158 'touch /home/azureuser/HELLOOOO.txt'
           
       - name: SSH into Azure server and run commands
         run: |
