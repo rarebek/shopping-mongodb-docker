@@ -1,0 +1,23 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: SSH into Azure server and run commands
+        run: |
+          ssh -o StrictHostKeyChecking=no azureuser@4.233.208.158 'sudo docker system prune -af && sudo docker-compose -f /home/azureuser/shopping-mongodb-docker/docker-compose.yaml up -d'
