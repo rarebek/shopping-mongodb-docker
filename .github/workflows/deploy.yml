@@ -22,12 +22,9 @@ jobs:
         run: |
           sudo docker stop $(sudo docker ps -a -q)
           sudo docker rm $(sudo docker ps -a -q)
-
-
       - name: Remove all images
         run: |
           sudo docker rmi $(sudo docker images -a -q)
-
       - name: SSH into Azure server and run commands
         run: |
           ssh -o StrictHostKeyChecking=no azureuser@4.233.208.158 'sudo docker-compose -f /home/azureuser/shopping-mongodb-docker/docker-compose.yaml up -d'
