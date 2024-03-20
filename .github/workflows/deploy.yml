@@ -17,13 +17,10 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Stop and remove all running containers
-        run: |
-          sudo docker stop $(sudo docker ps -a -q) && sudo docker rm $(sudo docker ps -a -q)
-      - name: Remove all images
-        run: |
-          sudo docker rmi $(sudo docker images -a -q)
+          
       - name: SSH into Azure server and run commands
         run: |
+          sudo docker stop $(sudo docker ps -a -q)
+          sudo docker rm $(sudo docker ps -a -q)
+          sudo docker rmi $(sudo docker images -a -q)
           ssh -o StrictHostKeyChecking=no azureuser@4.233.208.158 'sudo docker-compose -f /home/azureuser/shopping-mongodb-docker/docker-compose.yaml up -d'
