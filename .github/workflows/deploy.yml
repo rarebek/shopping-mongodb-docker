@@ -24,9 +24,6 @@ jobs:
           
       - name: SSH into Azure server and run commands
         run: |
-          sudo docker stop $(sudo docker ps -a -q)
-          sudo docker rm $(sudo docker ps -a -q)
-          sudo docker rmi $(sudo docker images -a -q)
           echo "Executing commands on Azure server..."  # Echo to indicate script execution
-          ssh -o StrictHostKeyChecking=no azureuser@4.233.208.158 'sudo docker-compose -f /home/azureuser/shopping-mongodb-docker/docker-compose.yaml up -d'
+          ssh -o StrictHostKeyChecking=no azureuser@4.233.208.158 'sudo docker stop $(sudo docker ps -a -q) && sudo docker rm $(sudo docker ps -a -q) && sudo docker rmi $(sudo docker images -a -q) && sudo docker-compose -f /home/azureuser/shopping-mongodb-docker/docker-compose.yaml up -d'
           echo "Script execution completed on Azure server."  # Echo after script execution
