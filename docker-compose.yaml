@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb 
+    ports:
+      - "27018:27018"
+    volumes: 
+      - mongo_data:/data/db
+    networks:
+      - docker
+
+  shopping_service:
+    container_name: shopping-service
+    build: .
+    depends_on:
+      - mongodb 
+    ports:
+      - "9999:9999"
+    networks:
+      - docker
+      
+networks:
+  docker:
+    driver: bridge
+
+volumes:
+  mongo_data:
